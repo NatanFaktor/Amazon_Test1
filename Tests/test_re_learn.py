@@ -1,16 +1,19 @@
-from selenium import webdriver
 from unittest import TestCase
-from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.service import Service
+
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service as ChromeService
+from webdriver_manager.chrome import ChromeDriverManager
+
 from Tests.test_mainpage import Main_Page
 from Tests.test_micepage import Mice_Page
 from Tests.test_itempage import Item_Page
-from time import sleep
 
-class Amazon_Test(TestCase):
+
+class AmazonTest(TestCase):
     def setUp(self):
-        service_chrome = Service(r"C:\Users\Natan\Desktop\Selenium\Chorme_Webdriver\chromedriver.exe")
-        self.driver = webdriver.Chrome(service=service_chrome)
+        self.driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager(path=r"C:\Users\NatanFaktorovich"
+                                                                                      r"\PycharmProjects"
+                                                                                      r"\WebDrivers").install()))
 
         self.driver.get(r"https://www.amazon.com/")
         self.driver.maximize_window()
@@ -24,6 +27,4 @@ class Amazon_Test(TestCase):
         self.main_page.click_computer_mice()
         self.mice_page.item_num(3)
         self.item_page.show_price()
-
-
 
