@@ -24,7 +24,14 @@ class AmazonTest(TestCase):
         self.item_page = Item_Page(self.driver)
 
     def test_case_1(self):
-        self.main_page.click_computer_mice()
+        if not self.main_page.computer_mice_exist():
+            while not self.main_page.computer_mice_exist():
+                self.driver.close()
+                self.setUp()
+
+        self.main_page.computer_mice_button.click()
         self.mice_page.item_num(3)
         self.item_page.show_price()
 
+    def tearDown(self) -> None:
+        self.driver.close()
